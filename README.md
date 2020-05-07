@@ -4,8 +4,8 @@
 
 ### 1. Run
 ```bash
-	docker build -t remote-manager .
-	docker run -it --rm -v "$PWD":/usr/src/remote-manager remote-manager composer install
+docker build -t remote-manager .
+docker run -it --rm -v "$PWD":/usr/src/remote-manager remote-manager composer install
 ```
 
 ### Create config
