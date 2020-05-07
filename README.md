@@ -2,6 +2,13 @@
 
 ## Setup
 
+### 0. Clone project
+
+```bash
+git clone git@github.com:lazy-ants/remote-manager.git
+cd remote-manager
+```
+
 ### 1. Run
 ```bash
 docker build -t remote-manager .
