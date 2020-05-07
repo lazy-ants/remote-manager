@@ -31,6 +31,10 @@ On each server you want to manage edit /etc/ssh/sshd_config and add at the end o
 ```
 AcceptEnv PASSWORD
 ```
+and reload the sshd server e.g.
+```
+sudo service sshd reload
+```
 
 ### 5. Add aliases
 You can map each of your private and public keys and the known_hosts file:
