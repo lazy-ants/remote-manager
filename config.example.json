@@ -1,0 +1,13 @@
+{
+  "instances": [
+    {
+      "name": "example.com",
+      "connection-string": "user@example.com",
+      "sudo-password": "qwerty"
+    },
+    {
+      "name": "example.org",
+      "connection-string": "otheruser@example.org"
+    }
+  ]
+}
