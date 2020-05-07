@@ -18,7 +18,7 @@ docker run -it --rm -v "$PWD":/usr/src/remote-manager remote-manager composer in
 ### 2. Create config
 
 Copy config.example.json to config.json and fill it with servers you want to manage
-"sudo password" is necessary in case you have to run commands with sudo and don't want to enter the sudo password each time
+"sudo-password" is necessary in case you have to run commands with sudo and don't want to enter the sudo password each time
 Alternatively if most of your servers use the same sudo password you can set in the .env.local.
 In first turn the password from the config.json will be used, otherwise the one from the .env.local if it is provided 
 
