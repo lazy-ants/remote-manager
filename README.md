@@ -39,7 +39,7 @@ alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console'
 ```
 
-Or you can just map the whole .ssh directory, however it won't work on MacOS if you have some MacOS specific options like "UseKeychain yes" in the .ssh/config. 
+Or you can just map the whole .ssh directory, however it won't work on MacOS if you have some MacOS specific options like "UseKeychain yes" in the .ssh/config: 
 ```
 alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager'
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager bin/console'
