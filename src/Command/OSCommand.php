@@ -10,15 +10,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
 
-class UptimeCommand extends AbstractCommand
+class OSCommand extends AbstractCommand
 {
-    protected static $defaultName = 'app:uptime';
+    protected static $defaultName = 'app:os';
 
     protected function configure()
     {
         $this
-            ->setDescription('Get server uptime')
-            ->setHelp('Get server uptime');
+            ->setDescription('Get server OS')
+            ->setHelp('Get server OS');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -29,7 +29,7 @@ class UptimeCommand extends AbstractCommand
         $progressBar->start();
 
         $table = new Table($output);
-        $table->setHeaders(['Name', 'Uptime']);
+        $table->setHeaders(['Name', 'OS']);
 
         $this->config->each(
             function ($hostConfig, $i) use ($output, $progressBar, $table) {
@@ -40,18 +40,24 @@ class UptimeCommand extends AbstractCommand
                 $process->start();
 
                 $input->write('echo "startoutputsisteminformation"');
-                $input->write('&& uptime -s');
+                $input->write('&& cat /etc/issue');
 
                 $input->close();
 
                 $process->wait();
 
-                $serverOutput = trim(explode('startoutputsisteminformation', $process->getOutput())[1]);
+                $serverOutput = trim(
+                    str_replace(
+                        ['\n', '\l'],
+                        '',
+                        explode('startoutputsisteminformation', $process->getOutput())[1]
+                    )
+                );
 
                 $table->addRow(
                     [
                         $hostConfig['name'],
-                        Carbon::createFromFormat('Y-m-d H:i:s', $serverOutput)->diffInDays() . ' days',
+                        $serverOutput,
                     ]
                 );
 
