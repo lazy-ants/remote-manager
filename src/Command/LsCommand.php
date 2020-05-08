@@ -55,13 +55,7 @@ class LsCommand extends Command
                     [
                         'ssh',
                         $hostConfig['connection-string'],
-                        '-o SendEnv="PASSWORD"',
-                        'echo $PASSWORD | ls -lha',
-//                        sudo -S
-                    ],
-                    null,
-                    [
-                        'PASSWORD' => $_ENV['SUDO_PASSWORD'],
+                        'ls -lha',
                     ]
                 );
                 $process->setTty(Process::isTtySupported());
