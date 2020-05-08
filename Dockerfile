@@ -8,6 +8,8 @@ RUN \
     bash \
     git
 
+RUN docker-php-ext-install pcntl
+
 RUN curl -s https://getcomposer.org/composer-stable.phar > /usr/local/bin/composer \
     && chmod a+x /usr/local/bin/composer
 

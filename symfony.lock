@@ -8,6 +8,9 @@
     "nikic/php-parser": {
         "version": "v4.4.0"
     },
+    "opis/closure": {
+        "version": "3.5.1"
+    },
     "php": {
         "version": "7.4"
     },
@@ -22,6 +25,9 @@
     },
     "psr/log": {
         "version": "1.1.3"
+    },
+    "spatie/async": {
+        "version": "1.4.0"
     },
     "symfony/cache": {
         "version": "v5.0.8"
