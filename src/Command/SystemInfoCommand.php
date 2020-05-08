@@ -43,7 +43,12 @@ class SystemInfoCommand extends AbstractCommand
                 $process->setInput($input);
                 $process->start();
 
-                $input->write('echo "' . base64_encode(file_get_contents('src/Scripts/system-info.sh')) . '" > /tmp/system-info.base64');
+                $input->write(
+                    sprintf(
+                        'echo "%s" > /tmp/system-info.base64',
+                        base64_encode(file_get_contents('src/Scripts/system-info.sh'))
+                    )
+                );
                 $input->write('&& base64 -d /tmp/system-info.base64 > /tmp/system-info.sh');
                 $input->write('&& rm /tmp/system-info.base64');
                 $input->write('&& chmod +x /tmp/system-info.sh');
@@ -55,7 +60,7 @@ class SystemInfoCommand extends AbstractCommand
 
                 $process->wait();
 
-                $serverOutput = explode( 'startoutputsisteminformation',$process->getOutput())[1];
+                $serverOutput = explode('startoutputsisteminformation', $process->getOutput())[1];
 
                 $output->writeln($serverOutput);
                 $output->writeln('<info>Finished:</info> ' . $hostConfig['name']);

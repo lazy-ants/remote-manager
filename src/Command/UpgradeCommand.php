@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
 
 class UpgradeCommand extends AbstractCommand
@@ -26,54 +27,34 @@ class UpgradeCommand extends AbstractCommand
                 $output->writeln('');
                 $output->writeln(sprintf('<info>[%s] Running:</info> %s', $i + 1, $hostConfig['name']));
 
-                $process = new Process(
-                    [
-                        'ssh',
-                        $hostConfig['connection-string'],
-                        '-o SendEnv="PASSWORD"',
-                        'echo $PASSWORD | sudo -S apt-get update',
-                    ],
-                    null,
-                    [
-                        'PASSWORD' => $_ENV['SUDO_PASSWORD'],
-                    ]
-                );
-                $process->setTty(Process::isTtySupported());
-                $process->start();
-                $process->wait();
+                $input = new InputStream();
 
                 $process = new Process(
                     [
                         'ssh',
                         $hostConfig['connection-string'],
                         '-o SendEnv="PASSWORD"',
-                        'echo $PASSWORD | sudo -S apt-get -y upgrade',
                     ],
                     null,
                     [
                         'PASSWORD' => $_ENV['SUDO_PASSWORD'],
                     ]
                 );
-                $process->setTty(Process::isTtySupported());
+                $process->setInput($input);
                 $process->start();
+
+                $input->write('echo "startoutputsisteminformation"');
+                $input->write('&& echo $PASSWORD | sudo -S apt-get update');
+                $input->write('&& echo $PASSWORD | sudo -S apt-get -y upgrade');
+                $input->write('&& echo $PASSWORD | sudo -S apt-get -y autoremove');
+
+                $input->close();
+
                 $process->wait();
 
-                $process = new Process(
-                    [
-                        'ssh',
-                        $hostConfig['connection-string'],
-                        '-o SendEnv="PASSWORD"',
-                        'echo $PASSWORD | sudo -S apt-get -y autoremove',
-                    ],
-                    null,
-                    [
-                        'PASSWORD' => $_ENV['SUDO_PASSWORD'],
-                    ]
-                );
-                $process->setTty(Process::isTtySupported());
-                $process->start();
-                $process->wait();
+                $serverOutput = explode('startoutputsisteminformation', $process->getOutput())[1];
 
+                $output->writeln($serverOutput);
                 $output->writeln('<info>Finished:</info> ' . $hostConfig['name']);
             }
         );
