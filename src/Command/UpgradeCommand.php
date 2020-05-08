@@ -2,24 +2,13 @@
 
 namespace App\Command;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
-use Tightenco\Collect\Support\Collection;
 
-class UpgradeCommand extends Command
+class UpgradeCommand extends AbstractCommand
 {
     protected static $defaultName = 'app:upgrade';
-
-    protected Collection $config;
-
-    public function __construct(string $name = null)
-    {
-
-        $this->config = new Collection(json_decode(file_get_contents('config.json'), true)['instances']);
-        parent::__construct($name);
-    }
 
     protected function configure()
     {
@@ -30,20 +19,6 @@ class UpgradeCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!empty($_ENV['PPK_NAMES'])) {
-            foreach (explode(',', $_ENV['PPK_NAMES']) as $ppkName) {
-                $process = new Process(
-                    [
-                        'ssh-add',
-                        '/root/.ssh/' . $ppkName,
-                    ]
-                );
-                $process->setTty(Process::isTtySupported());
-                $process->start();
-                $process->wait();
-            }
-        }
-
         $output->writeln('<info>Total servers:</info> ' . $this->config->count());
 
         $this->config->each(

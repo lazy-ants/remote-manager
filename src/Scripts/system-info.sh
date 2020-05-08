@@ -6,7 +6,7 @@ echo -e "Manufacturer:\t\t"`cat /sys/class/dmi/id/chassis_vendor`
 echo -e "Product Name:\t\t"`cat /sys/class/dmi/id/product_name`
 echo -e "Version:\t\t"`cat /sys/class/dmi/id/product_version`
 echo -e "Serial Number:\t\t"`cat /sys/class/dmi/id/product_serial`
-echo -e "Machine Type:\t\t"`vserver=$(lscpu | grep Hypervisor | wc -l); if [ $vserver -gt 0 ]; then echo "VM"; else echo "Physical"; fi`
+echo -e "Machine Type:\t\t"`vserver=$(lscpu | grep Hypervisor | wc -l); if [ ${vserver} -gt 0 ]; then echo "VM"; else echo "Physical"; fi`
 echo -e "Operating System:\t"`hostnamectl | grep "Operating System" | cut -d ' ' -f5-`
 echo -e "Kernel:\t\t\t"`uname -r`
 echo -e "Architecture:\t\t"`arch`
@@ -28,7 +28,7 @@ echo ""
 
 echo -e "-------------------------------For WWN Details-------------------------------"
 vserver=$(lscpu | grep Hypervisor | wc -l)
-if [ $vserver -gt 0 ]
+if [ ${vserver} -gt 0 ]
 then
 echo "$(hostname) is a VM"
 else
