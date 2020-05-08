@@ -2,13 +2,14 @@
 
 namespace App\Command;
 
-use Carbon\Carbon;
+use Spatie\Async\Pool;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\InputStream;
 use Symfony\Component\Process\Process;
+use Throwable;
+use Tightenco\Collect\Support\Collection;
 
 class OSCommand extends AbstractCommand
 {
@@ -28,46 +29,72 @@ class OSCommand extends AbstractCommand
         $progressBar = new ProgressBar($output, $this->config->count());
         $progressBar->start();
 
-        $table = new Table($output);
-        $table->setHeaders(['Name', 'OS']);
+        $pool = Pool::create();
+        $results = new Collection();
 
-        $this->config->each(
-            function ($hostConfig, $i) use ($output, $progressBar, $table) {
-                $input = new InputStream();
+        foreach ($this->config as $i => $hostConfig) {
+            $pool
+                ->add(
+                    function () use ($hostConfig) {
+                        $process = new Process(['ssh', $hostConfig['connection-string']]);
+                        $process->setInput('echo "startoutputsisteminformation" && cat /etc/issue');
 
-                $process = new Process(['ssh', $hostConfig['connection-string']]);
-                $process->setInput($input);
-                $process->start();
+                        $process->run();
 
-                $input->write('echo "startoutputsisteminformation"');
-                $input->write('&& cat /etc/issue');
-
-                $input->close();
-
-                $process->wait();
-
-                $serverOutput = trim(
-                    str_replace(
-                        ['\n', '\l'],
-                        '',
-                        explode('startoutputsisteminformation', $process->getOutput())[1]
-                    )
+                        return trim(
+                            str_replace(
+                                ['\n', '\l'],
+                                '',
+                                explode('startoutputsisteminformation', $process->getOutput())[1]
+                            )
+                        );
+                    }
+                )
+                ->then(
+                    function ($output) use (&$results, $hostConfig, $progressBar) {
+                        $results->push(
+                            [
+                                'name' => $hostConfig['name'],
+                                'value' => $output,
+                            ]
+                        );
+                        $progressBar->advance();
+                    }
+                )
+                ->catch(
+                    function (Throwable $exception) {
+                        var_dump($exception);
+                    }
+                )
+                ->timeout(
+                    function () {
+                        var_dump('timeout');
+                    }
                 );
+        }
 
-                $table->addRow(
-                    [
-                        $hostConfig['name'],
-                        $serverOutput,
-                    ]
-                );
-
-
-                $progressBar->advance();
-            }
-        );
+        $pool->wait();
 
         $progressBar->finish();
         $output->writeln('');
+
+        $table = new Table($output);
+        $table->setHeaders(['Name', 'OS']);
+
+        $results
+            ->sortBy('name')
+            ->each(
+                function ($body) use ($table) {
+                    $table->addRow(
+                        [
+                            $body['name'],
+                            $body['value'],
+                        ]
+                    );
+
+                }
+            );
+
         $table->render();
 
         return 0;
