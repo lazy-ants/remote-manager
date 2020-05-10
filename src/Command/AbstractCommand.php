@@ -118,25 +118,25 @@ abstract class AbstractCommand extends Command
     {
         $this->errors
             ->each(
-                function ($error, $i) use ($output) {
+                function ($item, $i) use ($output) {
                     if (0 == $i) {
                         $output->writeln('<error>Errors</error>');
                     }
-                    $output->writeln('host name: ' . $error['hostName']);
-                    $output->writeln('code: ' . $error['code']);
-                    $output->writeln('file: ' . $error['file']);
-                    $output->writeln('line: ' . $error['line']);
-                    $output->writeln('message: ' . $error['message']);
+                    $output->writeln('host name: ' . $item['hostName']);
+                    $output->writeln('code: ' . $item['code']);
+                    $output->writeln('file: ' . $item['file']);
+                    $output->writeln('line: ' . $item['line']);
+                    $output->writeln('message: ' . $item['message']);
                 }
             );
 
         $this->timeouts
             ->each(
-                function ($hostname, $i) use ($output) {
+                function ($item, $i) use ($output) {
                     if (0 == $i) {
                         $output->writeln('<error>Timeouts</error>');
                     }
-                    $output->writeln($hostname);
+                    $output->writeln($item);
                 }
             );
 
@@ -184,9 +184,9 @@ abstract class AbstractCommand extends Command
             ->sortBy('name')
             ->values()
             ->each(
-                function ($body, $i) use ($output, $total) {
-                    $output->writeln(sprintf('<info>[%s / %s] %s:</info>', $i + 1, $total, $body['name']));
-                    $output->writeln($body['value']);
+                function ($item, $i) use ($output, $total) {
+                    $output->writeln(sprintf('<info>[%s / %s] %s:</info>', $i + 1, $total, $item['name']));
+                    $output->writeln($item['value']);
                 }
             );
 
