@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class UpgradeCommand extends AbstractCommand
 {
     protected static $defaultName = 'app:upgrade';
+    protected bool $needSudo = true;
 
     protected function configure()
     {

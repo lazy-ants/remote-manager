@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class SystemInfoCommand extends AbstractCommand
 {
     protected static $defaultName = 'app:system-info';
+    protected bool $needSudo = true;
 
     protected function configure()
     {

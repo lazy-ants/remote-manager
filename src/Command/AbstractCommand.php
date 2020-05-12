@@ -2,6 +2,9 @@
 
 namespace App\Command;
 
+use App\Configuration\ServerInstanceItem;
+use App\Configuration\ServerInstancesConfig;
+use App\Task\AbstractTask;
 use App\Task\SimpleTask;
 use Spatie\Async\Pool;
 use Symfony\Component\Console\Command\Command;
@@ -21,10 +24,11 @@ abstract class AbstractCommand extends Command
     protected Pool $pool;
     protected Collection $errors;
     protected Collection $timeouts;
+    protected bool $needSudo = false;
 
     public function __construct(string $name = null)
     {
-        $this->config = new Collection(json_decode(file_get_contents('config.json'), true)['instances']);
+        $this->config = new ServerInstancesConfig();
 
         # add private keys to the ssh agent
         if (!empty($_ENV['PPK_NAMES'])) {
@@ -63,19 +67,30 @@ abstract class AbstractCommand extends Command
      */
     protected function process(string $command)
     {
+        /** @var ServerInstanceItem $hostConfig */
         foreach ($this->config as $i => $hostConfig) {
-            $hostName = $hostConfig['name'];
-
             $this->pool
                 ->add(
-                    new SimpleTask($hostConfig['connection-string'], $_ENV['SUDO_PASSWORD'], $command),
+                    $this->needSudo ?
+                        new SimpleTask(
+                            $hostConfig->name,
+                            $hostConfig->connectionString,
+                            $command,
+                            AbstractTask::NEED_SUDO,
+                            $hostConfig->sudoPassword
+                        ) :
+                        new SimpleTask(
+                            $hostConfig->name,
+                            $hostConfig->connectionString,
+                            $command
+                        ),
                     1024 * 100
                 )
                 ->then(
                     function ($output) use ($hostConfig) {
                         $this->results->push(
                             [
-                                'name' => $hostConfig['name'],
+                                'name' => $hostConfig->name,
                                 'value' => $output,
                             ]
                         );
@@ -84,10 +99,10 @@ abstract class AbstractCommand extends Command
                     }
                 )
                 ->catch(
-                    function (Throwable $exception) use ($hostName) {
+                    function (Throwable $exception) use ($hostConfig) {
                         $this->errors->push(
                             [
-                                'hostName' => $hostName,
+                                'hostName' => $hostConfig->name,
                                 'code' => $exception->getCode(),
                                 'file' => $exception->getFile(),
                                 'line' => $exception->getLine(),
@@ -97,8 +112,8 @@ abstract class AbstractCommand extends Command
                     }
                 )
                 ->timeout(
-                    function () use ($hostName) {
-                        $this->timeouts->push($hostName);
+                    function () use ($hostConfig) {
+                        $this->timeouts->push($hostConfig->name);
                     }
                 );
         }

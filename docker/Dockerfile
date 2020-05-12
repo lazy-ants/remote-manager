@@ -15,6 +15,9 @@ RUN curl -s https://getcomposer.org/composer-stable.phar > /usr/local/bin/compos
 
 RUN rm -rf /var/cache/apk/*
 
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 WORKDIR /usr/src/remote-manager
 
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT ["docker-entrypoint.sh"]

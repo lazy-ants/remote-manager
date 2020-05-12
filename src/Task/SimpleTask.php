@@ -8,17 +8,29 @@ class SimpleTask extends AbstractTask
 {
     public function run()
     {
-        $process = new Process(
-            [
-                'ssh',
-                $this->connectionString,
-                '-o SendEnv="PASSWORD"',
-            ],
-            null,
-            [
-                'PASSWORD' => $_ENV['SUDO_PASSWORD'],
-            ]
-        );
+        if ($this->needSudo) {
+            if (empty($this->sudoPassword)) {
+                throw new \InvalidArgumentException($this->name . ' needs sudo password');
+            }
+            $process = new Process(
+                [
+                    'ssh',
+                    $this->connectionString,
+                    '-o SendEnv="PASSWORD"',
+                ],
+                null,
+                [
+                    'PASSWORD' => $this->sudoPassword,
+                ]
+            );
+        } else {
+            $process = new Process(
+                [
+                    'ssh',
+                    $this->connectionString,
+                ]
+            );
+        }
 
         $process->setInput('echo "startoutputsysteminformation" && ' . $this->command);
 
