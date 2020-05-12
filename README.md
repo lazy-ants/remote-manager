@@ -51,7 +51,7 @@ reload the sshd server e.g.
 sudo service sshd reload
 ```
 
-### 5. Add alias.
+### 5. Add alias
 In case you have OS specific options like "UseKeychain yes" on MacOS in your .ssh/config: 
 ```
 alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager'
@@ -66,12 +66,55 @@ alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/
 
 Re-login into terminal or reload alias config so changes take effect.
 
-### 6. Run you first command to see e.g. the server uptime
+### 6. Validate configuration and server accessibility
+Run:
+```
+reman-console app:validate-config
+```
+
+### 7. Run you first command to see e.g. the server uptime
 
 To test this setup run
 ```
 reman-console app:uptime
 ```
+
+## Available commands
+
+### app:docker-compose-version  
+Get docket compose version
+
+### app:docker-prune
+Prune old docker data
+
+### app:docker-ps               
+Show docker process status
+
+### app:kernel                  
+Get server kernels
+
+### app:ls                      
+Run ls command on all servers
+
+### app:os                      
+Get server OS
+
+### app:reboot                  
+Checks whether a reboot is required
+
+### app:system-info             
+Get system information
+
+### app:upgrade                 
+Upgrade server packages
+
+### app:uptime                  
+Get server uptime
+
+### app:validate-config         
+Validate server instances config
+
+## Login into docker
 
 If you want to login into the docker container:
 ```
