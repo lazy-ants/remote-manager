@@ -1,13 +1,9 @@
 # Remote Manager
 
 This tool is intended for mass management and monitoring of remote servers.
-
 The main idea is to get information about the status of remote servers, analyze it and provide maintenance as easily as possible.
- 
 The main goal of the project is also to create an utility that can be quickly extended for your own needs.
-
 Feel free to send pull requests if you have any ideas for improving or extending the functionality.
-
 
 ## Setup
 
@@ -29,62 +25,34 @@ make init
 
 ### 3. Add server connection to the config
 
-Open config.json with the editor of your choice and fill it with servers you want to manage.
+Open config.json with the editor of your choice and fill it with servers connection strings you want to manage.
+it means "user@domain:port", however the port is optional.
 
-Here:
-
-name: the alias name of your server (for internal use)
-connection-string: connection to you server user@domain:port (port is optional)
-sudo-password: sudo password if you want to use commands needed sudo
-
-In case your personal private key has a different name than id_rsa, got to the .env.local and provided it
-
-### 4. Prepare servers you want to manage
-
-We need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of runnnig commands with sudo).
-Therefore, On each server you want to manage edit 
+### 4. Running configuration
+With docker:
 ```
-sudo nano /etc/ssh/sshd_config
-``` 
-add at the end of the config:
+docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console app:validate-config
 ```
-AcceptEnv PASSWORD
+With docker compose:
 ```
-reload the sshd server e.g.
+docker-compose run remote-manager bin/console app:validate-config
 ```
-sudo service sshd reload
-```
-
-### 5. Add alias
-In case you have OS specific options like "UseKeychain yes" on MacOS in your .ssh/config: 
-```
-alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager'
-alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console'
-```
-
-Otherwise you can simple map the whole .ssh directory:
-```
-alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager'
-alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager bin/console'
-```
-
-Re-login into terminal or reload alias config so changes take effect.
-
-### 6. Validate configuration and server accessibility
-Run:
-```
-reman-console app:validate-config
-```
-
 #### Result
 
 <img width="672" alt="image" src="https://user-images.githubusercontent.com/28564/81734095-ac503200-949b-11ea-90fc-1a7a7803aff5.png">
 
-### 7. Run you first command to see e.g. the server uptime
+### 5. Run you first command to see e.g. the server uptime
 
 To test this setup run
+
+With docker
 ```
-reman-console app:uptime
+docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console app:uptime
+```
+
+with docker composer:
+```
+docker-compose run remote-manager bin/console app:uptime
 ```
 
 ## Available commands
@@ -124,9 +92,46 @@ Get server uptime
 ### app:validate-config         
 Validate server instances config
 
-## Login into docker
+## FAQ
+
+### Login into console
 
 If you want to login into the docker container:
 ```
 reman-cli bash
+```
+
+### Runnning command needed the sudo password
+
+Prepare servers you want to manage:
+
+First of all, you need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of runnnig commands with sudo).
+Therefore, On each server you want to manage edit 
+```
+sudo nano /etc/ssh/sshd_config
+``` 
+add at the end of the config:
+```
+AcceptEnv PASSWORD
+```
+reload the sshd server e.g.
+```
+sudo service sshd reload
+```
+
+After that you either need to provide the sudo password in the .env.local file in case the most of your servers use the same sudo password or you can add in the config.json file in each configuration sectiona using the key "sudo-ppassword".  
+
+### Adding aliases
+In case you want to simplify using this tool you may want to add aliases.
+
+In case you have OS specific options like "UseKeychain yes" on MacOS in your .ssh/config: 
+```
+alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager'
+alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console'
+```
+
+Otherwise you can simple map the whole .ssh directory:
+```
+alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager'
+alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager bin/console'
 ```

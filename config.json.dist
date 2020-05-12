@@ -2,12 +2,11 @@
   "instances": [
     {
       "name": "example.com",
-      "connection-string": "user@example.com",
-      "sudo-password": "qwerty"
+      "connection-string": "user@example1.com",
     },
     {
       "name": "example.org",
-      "connection-string": "otheruser@example.org"
+      "connection-string": "otheruser@example2.org"
     }
   ]
 }
