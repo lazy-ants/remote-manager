@@ -1,73 +1,76 @@
 # Remote Manager
 
+This tool is intended for mass management and monitoring of remote servers.
+
+The main idea is to get information about the status of remote servers, analyze it and provide maintenance as easily as possible.
+ 
+The main goal of the project is also to create an utility that can be quickly extended for your own needs.
+
+Feel free to send pool pull requests if you have any ideas for improving or extending the functionality.
+
+
 ## Setup
 
-### 0. Clone project
+### 1. Clone project
 
 ```bash
 git clone git@github.com:lazy-ants/remote-manager.git
 cd remote-manager
 ```
 
-### 1. Run
+### 2. Initial setup
 ```bash
-docker build -t remote-manager .
-docker run -it --rm -v "$PWD":/usr/src/remote-manager remote-manager composer install
+make init
 ```
 
-### 2. Create a config.
+### 3. Edit server instances to the config
 
-Copy config.example.json to config.json 
-```
-cp config.example.json to config.json
-```
-and fill it with servers you want to manage.
-"sudo-password" is necessary in case you have to run commands with sudo and don't want to enter the sudo password each time
-Alternatively if most of your servers use the same sudo password you can set in the .env.local.
-In first turn the password from the config.json will be used, otherwise the one from the .env.local if it is provided 
+Open config.json with the editor of your choice and fill it with servers you want to manage.
 
-### 3. Setup .env.local
-Copy .env to .env.local
-```
-cp .env .env.local
-```
+Here:
 
-Enter here comma separated names of your private keys in PPK_NAMES (if you have just one - enter only this)
+name: the alias name of your server (for internal use)
+connection-string: connection to you server user@domain:port (port is optional)
+sudo-password: sudo password if you want to use commands needed sudo
+
+In case your personal private key has a different name than id_rsa, got to the .env.local and provided it
 
 ### 4. Prepare servers you want to manage.
-On each server you want to manage edit 
+
+We need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of runnnig commands with sudo).
+Therefore, On each server you want to manage edit 
 ```
 sudo nano /etc/ssh/sshd_config
 ``` 
-and add at the end of the config:
+add at the end of the config:
 ```
 AcceptEnv PASSWORD
 ```
-and reload the sshd server e.g.
+reload the sshd server e.g.
 ```
 sudo service sshd reload
 ```
 
 ### 5. Add alias.
-You can map each of your private and public keys and the known_hosts file:
+In case you have OS specific options like "UseKeychain yes" on MacOS in your .ssh/config: 
 ```
 alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager'
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console'
 ```
 
-Or you can just map the whole .ssh directory, however it won't work on MacOS if you have some MacOS specific options like "UseKeychain yes" in the .ssh/config: 
+Otherwise you can simple map the whole .ssh directory:
 ```
 alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager'
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager bin/console'
 ```
 
-Re-login into terminal or reload alias config so changes take effect
+Re-login into terminal or reload alias config so changes take effect.
 
-### 6. Running test command.
+### 6. Run you first command to see e.g. the server uptime
 
 To test this setup run
 ```
-reman-console app:ls
+reman-console app:uptime
 ```
 
 If you want to login into the docker container:
