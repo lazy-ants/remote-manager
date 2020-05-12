@@ -23,7 +23,7 @@ cd remote-manager
 make init
 ```
 
-### 3. Edit server instances to the config
+### 3. Add server connection to the config
 
 Open config.json with the editor of your choice and fill it with servers you want to manage.
 
@@ -35,7 +35,7 @@ sudo-password: sudo password if you want to use commands needed sudo
 
 In case your personal private key has a different name than id_rsa, got to the .env.local and provided it
 
-### 4. Prepare servers you want to manage.
+### 4. Prepare servers you want to manage
 
 We need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of runnnig commands with sudo).
 Therefore, On each server you want to manage edit 
