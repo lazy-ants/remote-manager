@@ -6,7 +6,7 @@ The main idea is to get information about the status of remote servers, analyze 
  
 The main goal of the project is also to create an utility that can be quickly extended for your own needs.
 
-Feel free to send pool pull requests if you have any ideas for improving or extending the functionality.
+Feel free to send pull requests if you have any ideas for improving or extending the functionality.
 
 
 ## Setup
