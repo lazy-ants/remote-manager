@@ -110,11 +110,13 @@ Get server OS
 ### app:reboot                  
 Checks whether a reboot is required
 
-### app:system-info             
-Get system information
+### app:system-info
+- note: [sudo required]
+- Get system information
 
-### app:upgrade                 
-Upgrade server packages
+### app:upgrade
+- note: [sudo required]
+- Upgrade server packages
 
 ### app:uptime                  
 Get server uptime
