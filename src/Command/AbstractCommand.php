@@ -28,6 +28,16 @@ abstract class AbstractCommand extends Command
 
     public function __construct(string $name = null)
     {
+        $this->results = new Collection();
+        $this->pool = Pool::create();
+        $this->errors = new Collection();
+        $this->timeouts = new Collection();
+
+        parent::__construct($name);
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $this->config = new ServerInstancesConfig();
 
         # add private keys to the ssh agent
@@ -45,16 +55,6 @@ abstract class AbstractCommand extends Command
             }
         }
 
-        $this->results = new Collection();
-        $this->pool = Pool::create();
-        $this->errors = new Collection();
-        $this->timeouts = new Collection();
-
-        parent::__construct($name);
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
         $output->writeln('<info>Total servers:</info> ' . $this->config->count());
 
         $this->progressBar = new ProgressBar($output, $this->config->count());

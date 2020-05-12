@@ -36,11 +36,13 @@ class SimpleTask extends AbstractTask
 
         $process->run();
 
+        $result = explode('startoutputsysteminformation', $process->getOutput());
+
         return trim(
             str_replace(
                 ['\n', '\l'],
                 '',
-                explode('startoutputsysteminformation', $process->getOutput())[1]
+                isset($result[1]) ? $result[1] : ''
             )
         );
     }
