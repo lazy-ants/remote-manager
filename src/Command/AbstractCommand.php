@@ -33,13 +33,13 @@ abstract class AbstractCommand extends Command
         $this->errors = new Collection();
         $this->timeouts = new Collection();
 
+        $this->config = new ServerInstancesConfig();
+
         parent::__construct($name);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->config = new ServerInstancesConfig();
-
         # add private keys to the ssh agent
         if (!empty($_ENV['PPK_NAMES'])) {
             foreach (explode(',', $_ENV['PPK_NAMES']) as $ppkName) {

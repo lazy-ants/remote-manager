@@ -13,7 +13,7 @@ Feel free to send pull requests if you have any ideas for improving or extending
 
 ### 0. Preparation
 
-You will need to setup docker to run this tool
+You will need to setup docker in order to use this tool.
 
 ### 1. Clone project
 

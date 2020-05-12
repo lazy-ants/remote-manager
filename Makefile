@@ -1,7 +1,8 @@
 hello:
 	@ echo "The following make targets are available"
 	@ echo "  help - print this message"
-	@ echo "  initial setup - build docker image and install dependencies"
+	@ echo "  init - build docker image and install dependencies"
+	@ echo "  update - update docker image and dependencies"
 
 init:
 	docker build -t remote-manager ./docker
