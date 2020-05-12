@@ -1,0 +1,13 @@
+version: '3.3'
+
+services:
+    remote-manager:
+        container_name: remote-manager
+        build:
+          context: .
+          dockerfile: Dockerfile
+        volumes:
+            - .:/usr/src/remote-manager
+            - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+            - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+            - ~/.ssh/id_rsa:/root/.ssh/known_hosts
