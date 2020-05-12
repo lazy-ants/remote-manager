@@ -76,6 +76,10 @@ Run:
 reman-console app:validate-config
 ```
 
+#### Result
+
+<img width="672" alt="image" src="https://user-images.githubusercontent.com/28564/81734095-ac503200-949b-11ea-90fc-1a7a7803aff5.png">
+
 ### 7. Run you first command to see e.g. the server uptime
 
 To test this setup run
