@@ -5,7 +5,6 @@ namespace App\Command;
 use App\Configuration\ServerInstanceItem;
 use App\Task\AbstractTask;
 use App\Task\SimpleTask;
-use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,15 +24,23 @@ class ValidateConfigCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->progressBar = new ProgressBar($output, $this->config->count());
-        $this->progressBar->start();
+        $this->init();
 
         $table = new Table($output);
         $table->setHeaders(['Name', 'Login possible?', 'Sudo password exposed?', 'Sudo possible?']);
 
         $this->config->each(
-            function (ServerInstanceItem $item) use ($table) {
+            function (ServerInstanceItem $item, $i) use ($output, $table) {
                 $tableRow = [$item->name];
+                $output->writeln(
+                    sprintf(
+                        'Checking %s of %s: %s',
+                        $i + 1,
+                        $this->config->count(),
+                        $item->name
+                    )
+                );
+
                 $input = new InputStream();
 
                 # check if login possible
@@ -71,12 +78,9 @@ class ValidateConfigCommand extends AbstractCommand
                 }
 
                 $table->addRow($tableRow);
-
-                $this->progressBar->advance();
             }
         );
 
-        $this->progressBar->finish();
         $output->writeln('');
         $table->render();
 
