@@ -68,13 +68,19 @@ Show docker process status
 
 ![docker-ps](https://user-images.githubusercontent.com/249065/81821072-bcb2ec00-9531-11ea-8fd6-51513f406ab1.png)
 
-### app:kernel                  
+### app:kernel
 Get server kernels
 
 ![kernel](https://user-images.githubusercontent.com/249065/81821068-bb81bf00-9531-11ea-916a-02daef2b77f4.png)
 
-### app:ls                      
+### app:ls
 Run ls command on all servers
+
+#### examples
+- `app:ls` default value, with *-lha* argumetns list the current directory
+- `app:ls './ -la'` list the current directory
+- `app:ls '../ -la'` list the up directory
+- `app:ls '/ -la'` list the root directory
 
 ![ls](https://user-images.githubusercontent.com/249065/81821048-b6bd0b00-9531-11ea-93a7-e58422c77b2b.png)
 
