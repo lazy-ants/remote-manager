@@ -34,7 +34,7 @@ docker-compose run remote-manager bin/console app:validate-config
 ```
 #### Result
 
-<img width="672" alt="image" src="https://user-images.githubusercontent.com/28564/81734095-ac503200-949b-11ea-90fc-1a7a7803aff5.png">
+![validate](https://user-images.githubusercontent.com/249065/81821063-ba509200-9531-11ea-85eb-ef735ab42f1f.png)
 
 ### 5. Run you first command to see e.g. the server uptime
 
@@ -55,37 +55,60 @@ docker-compose run remote-manager bin/console app:uptime
 ### app:docker-compose-version  
 Get docket compose version
 
+![docker-compose](https://user-images.githubusercontent.com/249065/81821076-bd4b8280-9531-11ea-8a7f-3f5bbf1418bd.png)
+
+
 ### app:docker-prune
 Prune old docker data
 
-### app:docker-ps               
+![docker-prune](https://user-images.githubusercontent.com/249065/81821073-bd4b8280-9531-11ea-940d-cff7a7cd0c61.png)
+
+### app:docker-ps
 Show docker process status
+
+![docker-ps](https://user-images.githubusercontent.com/249065/81821072-bcb2ec00-9531-11ea-8fd6-51513f406ab1.png)
 
 ### app:kernel                  
 Get server kernels
 
+![kernel](https://user-images.githubusercontent.com/249065/81821068-bb81bf00-9531-11ea-916a-02daef2b77f4.png)
+
 ### app:ls                      
 Run ls command on all servers
+
+![ls](https://user-images.githubusercontent.com/249065/81821048-b6bd0b00-9531-11ea-93a7-e58422c77b2b.png)
 
 ### app:os                      
 Get server OS
 
+![os](https://user-images.githubusercontent.com/249065/81821066-bb81bf00-9531-11ea-93be-cdd89c1b5f3a.png)
+
 ### app:check-reboot                  
 Checks whether a reboot is required
+
+![reboot](https://user-images.githubusercontent.com/249065/81821065-bae92880-9531-11ea-9b70-59d6d8d941d1.png)
 
 ### app:system-info
 - note: [sudo required]
 - Get system information
 
+![system-info](https://user-images.githubusercontent.com/249065/81821061-ba509200-9531-11ea-8829-0fb9ca619105.png)
+
 ### app:upgrade
 - note: [sudo required]
 - Upgrade server packages
 
+![upgrade](https://user-images.githubusercontent.com/249065/81821055-b91f6500-9531-11ea-8480-722a2cc65fbe.png)
+
 ### app:uptime                  
 Get server uptime
 
+![uptime](https://user-images.githubusercontent.com/249065/81821064-bae92880-9531-11ea-989d-e64e5eff0ac7.png)
+
 ### app:validate-config         
 Validate server instances config
+
+![validate](https://user-images.githubusercontent.com/249065/81821063-ba509200-9531-11ea-85eb-ef735ab42f1f.png)
 
 ## FAQ
 
