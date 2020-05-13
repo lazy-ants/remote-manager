@@ -155,8 +155,7 @@ alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/
 ```
 
 Or if you prefer docker-compose:
-```
-Otherwise you can simple map the whole .ssh directory:
+
 ```
 alias reman-cli='docker-compose run remote-manager bash'
 alias reman-console='docker-compose run remote-manager bin/console'
@@ -165,7 +164,6 @@ alias reman-console='docker-compose run remote-manager bin/console'
 ## Contributing
 
 Remote Manager is an open source project. If you find bugs or have proposal please create [issue](https://github.com/lazy-ants/remote-manager/issues) or Pull Request
-
 
 ## License
 
