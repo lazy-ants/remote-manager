@@ -1,15 +1,10 @@
 # Remote Manager
 
-This tool is intended for mass management and monitoring of remote servers.
-The main idea is to get information about the status of remote servers, analyze it and provide maintenance as easily as possible.
-The main goal of the project is also to create an utility that can be quickly extended for your own needs.
-Feel free to send pull requests if you have any ideas for improving or extending the functionality.
-
 ## Setup
 
 ### 0. Preparation
 
-You will need to setup docker in order to use this tool.
+You need to install docker and optionally docker compose in order to use this tool.
 
 ### 1. Clone project
 
@@ -25,15 +20,15 @@ make init
 
 ### 3. Add server connection to the config
 
-Open config.json with the editor of your choice and fill it with servers connection strings you want to manage.
-it means "user@domain:port", however the port is optional.
+Open **config.json** with the editor of your choice and and add server connections.
+It means "user@domain:port", however the port is optional.
 
 ### 4. Running configuration
 With docker:
 ```
 docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console app:validate-config
 ```
-With docker compose:
+With docker-compose:
 ```
 docker-compose run remote-manager bin/console app:validate-config
 ```
@@ -101,7 +96,7 @@ If you want to login into the docker container:
 reman-cli bash
 ```
 
-### Runnning command needed the sudo password
+### Running command needed the sudo password
 
 Prepare servers you want to manage:
 
@@ -134,4 +129,12 @@ Otherwise you can simple map the whole .ssh directory:
 ```
 alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager'
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager bin/console'
+```
+
+Or if you prefer docker-compose:
+```
+Otherwise you can simple map the whole .ssh directory:
+```
+alias reman-cli='docker-compose run remote-manager bash'
+alias reman-console='docker-compose run remote-manager bin/console'
 ```
