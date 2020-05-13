@@ -11,7 +11,6 @@
         "symfony/console": "5.0.*",
         "symfony/dotenv": "5.0.*",
         "symfony/process": "5.0.*",
-        "symfony/yaml": "5.0.*",
         "tightenco/collect": "^7.9"
     },
     "require-dev": {
@@ -32,17 +31,6 @@
             "App\\Tests\\": "tests/"
         }
     },
-    "replace": {
-        "paragonie/random_compat": "2.*",
-        "symfony/polyfill-ctype": "*",
-        "symfony/polyfill-iconv": "*",
-        "symfony/polyfill-php74": "*",
-        "symfony/polyfill-php73": "*",
-        "symfony/polyfill-php72": "*",
-        "symfony/polyfill-php71": "*",
-        "symfony/polyfill-php70": "*",
-        "symfony/polyfill-php56": "*"
-    },
     "scripts": {
         "auto-scripts": {
 
@@ -53,14 +41,5 @@
         "post-update-cmd": [
             "@auto-scripts"
         ]
-    },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
-    "extra": {
-        "symfony": {
-            "allow-contrib": false,
-            "require": "5.0.*"
-        }
     }
 }
