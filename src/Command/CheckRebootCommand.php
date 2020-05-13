@@ -7,9 +7,9 @@ use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class RebootCommand extends AbstractCommand
+class CheckRebootCommand extends AbstractCommand
 {
-    protected static $defaultName = 'app:reboot';
+    protected static $defaultName = 'app:check-reboot';
 
     protected function configure()
     {

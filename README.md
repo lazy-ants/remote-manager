@@ -70,7 +70,7 @@ Run ls command on all servers
 ### app:os                      
 Get server OS
 
-### app:reboot                  
+### app:check-reboot                  
 Checks whether a reboot is required
 
 ### app:system-info
