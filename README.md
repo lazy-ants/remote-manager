@@ -123,6 +123,38 @@ Validate server instances config
 
 ## FAQ
 
+### Using tags
+
+You can add to each server instance in the config.json tags, e.g.
+```json
+{
+  "instances": [
+    {
+      "name": "example.com",
+      "connection-string": "user@example1.com",
+      "tags": "staging,client1"
+    },
+    {
+      "name": "example.org",
+      "connection-string": "otheruser@example2.org",
+      "tags": "live,client1"
+    },
+    {
+      "name": "example.net",
+      "connection-string": "someotheruser@example3.net",
+      "tags": "staging,client3"
+    }
+  ]
+}
+```
+
+and call every command with tags of servers you need:
+
+```bash
+app:uptime -t client1
+app:uptime -t client2,staging
+```
+
 ### Login into console
 
 If you want to login into the docker container:

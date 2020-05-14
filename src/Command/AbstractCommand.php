@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 use Throwable;
@@ -18,13 +19,14 @@ use Tightenco\Collect\Support\Collection;
 
 abstract class AbstractCommand extends Command
 {
-    protected Collection $config;
+    protected ServerInstancesConfig $config;
     protected ProgressBar $progressBar;
     protected Collection $results;
     protected Pool $pool;
     protected Collection $errors;
     protected Collection $timeouts;
     protected bool $needSudo = false;
+    protected array $tags = [];
 
     public function __construct(string $name = null)
     {
@@ -35,10 +37,21 @@ abstract class AbstractCommand extends Command
         parent::__construct($name);
     }
 
+    protected function configure()
+    {
+        $this->addOption(
+            'tags',
+            't',
+            InputOption::VALUE_OPTIONAL,
+            'Comma separated tags of server instances should be considered during running the command'
+        );
+    }
+
     protected function init()
     {
         $this->pool = Pool::create();
-        $this->config = new ServerInstancesConfig();
+        $this->config = (new ServerInstancesConfig())
+            ->filterByTags($this->tags);
 
         # add private keys to the ssh agent
         if (!empty($_ENV['PPK_NAMES'])) {
@@ -58,11 +71,12 @@ abstract class AbstractCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->tags = explode(',', $input->getOption('tags'));
         $this->init();
 
-        $output->writeln('<info>Total servers:</info> ' . $this->config->count());
+        $output->writeln('<info>Total servers:</info> ' . $this->config->instances->count());
 
-        $this->progressBar = new ProgressBar($output, $this->config->count());
+        $this->progressBar = new ProgressBar($output, $this->config->instances->count());
         $this->progressBar->start();
     }
 
@@ -73,7 +87,7 @@ abstract class AbstractCommand extends Command
     protected function process(string $command)
     {
         /** @var ServerInstanceItem $hostConfig */
-        foreach ($this->config as $i => $hostConfig) {
+        foreach ($this->config->instances as $i => $hostConfig) {
             $this->pool
                 ->add(
                     $this->needSudo ?

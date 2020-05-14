@@ -13,6 +13,8 @@ class UptimeCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Get server uptime')
             ->setHelp('Get server uptime');
