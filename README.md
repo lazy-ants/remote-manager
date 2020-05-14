@@ -18,6 +18,11 @@ cd remote-manager
 make init
 ```
 
+or in case of updating in the future:
+```bash
+make update
+```
+
 ### 3. Add server connection to the config
 
 Open **config.json** with the editor of your choice and add server connections.
