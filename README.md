@@ -20,7 +20,7 @@ make init
 
 ### 3. Add server connection to the config
 
-Open **config.json** with the editor of your choice and and add server connections.
+Open **config.json** with the editor of your choice and add server connections.
 It means "user@domain:port", however the port is optional.
 
 ### 4. Running configuration
