@@ -1,0 +1,33 @@
+#!/usr/bin/env php
+<?php
+use App\Command\CheckRebootCommand;
+use App\Command\DockerComposeVersionCommand;
+use App\Command\DockerPruneCommand;
+use App\Command\DockerPsCommand;
+use App\Command\KernelCommand;
+use App\Command\LsCommand;
+use App\Command\OSCommand;
+use App\Command\SystemInfoCommand;
+use App\Command\UpgradeCommand;
+use App\Command\UptimeCommand;
+use App\Command\ValidateConfigCommand;
+use Symfony\Component\Console\Application;
+
+require __DIR__ . '/vendor/autoload.php';
+require __DIR__ . '/config/bootstrap.php';
+
+$application = new Application();
+
+$application->add(new CheckRebootCommand());
+$application->add(new DockerComposeVersionCommand());
+$application->add(new DockerPruneCommand());
+$application->add(new DockerPsCommand());
+$application->add(new KernelCommand());
+$application->add(new LsCommand());
+$application->add(new SystemInfoCommand());
+$application->add(new UpgradeCommand());
+$application->add(new OSCommand());
+$application->add(new UptimeCommand());
+$application->add(new ValidateConfigCommand());
+
+$application->run();

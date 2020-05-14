@@ -29,7 +29,6 @@ abstract class AbstractCommand extends Command
     public function __construct(string $name = null)
     {
         $this->results = new Collection();
-        $this->pool = Pool::create();
         $this->errors = new Collection();
         $this->timeouts = new Collection();
 
@@ -38,6 +37,7 @@ abstract class AbstractCommand extends Command
 
     protected function init()
     {
+        $this->pool = Pool::create();
         $this->config = new ServerInstancesConfig();
 
         # add private keys to the ssh agent
