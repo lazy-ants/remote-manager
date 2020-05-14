@@ -4,6 +4,7 @@ namespace App\Command;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 
 class LsCommand extends AbstractCommand
 {
@@ -13,7 +14,8 @@ class LsCommand extends AbstractCommand
     {
         $this
             ->setDescription('Run ls command on all servers')
-            ->setHelp('Run ls command on all servers');
+            ->setHelp('Run ls command on all servers')
+            ->addArgument('arg', InputArgument::OPTIONAL, 'ls command arguments', '-lha');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -21,7 +23,7 @@ class LsCommand extends AbstractCommand
         parent::execute($input, $output);
 
         $this
-            ->process('ls -lha')
+            ->process('ls ' . $input->getArgument('arg'))
             ->outputList($output)
             ->outputErrors($output);
 
