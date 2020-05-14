@@ -13,8 +13,6 @@
         "symfony/process": "5.0.*",
         "tightenco/collect": "^7.9"
     },
-    "require-dev": {
-    },
     "config": {
         "preferred-install": {
             "*": "dist"
