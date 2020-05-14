@@ -15,17 +15,15 @@ class LsCommand extends AbstractCommand
         $this
             ->setDescription('Run ls command on all servers')
             ->setHelp('Run ls command on all servers')
-            ->addArgument('arg', InputArgument::OPTIONAL, 'ls command arguments');
+            ->addArgument('arg', InputArgument::OPTIONAL, 'ls command arguments', '-lha');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         parent::execute($input, $output);
 
-        $arg = $input->getArgument('arg') ?: '-lha';
-
         $this
-            ->process('ls '. $arg)
+            ->process('ls ' . $input->getArgument('arg'))
             ->outputList($output)
             ->outputErrors($output);
 
