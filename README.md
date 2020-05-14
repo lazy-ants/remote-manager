@@ -76,7 +76,7 @@ Get server kernels
 ### app:ls
 Run ls command on all servers
 
-#### examples
+#### Examples
 - `app:ls` default value, with *-lha* argumetns list the current directory
 - `app:ls './ -la'` list the current directory
 - `app:ls '../ -la'` list the up directory
