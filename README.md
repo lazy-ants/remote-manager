@@ -129,7 +129,7 @@ reman-cli bash
 
 Prepare servers you want to manage:
 
-First of all, you need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of runnnig commands with sudo).
+First of all, you need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of running commands with sudo).
 Therefore, On each server you want to manage edit 
 ```
 sudo nano /etc/ssh/sshd_config
