@@ -57,4 +57,22 @@ class ServerInstancesConfig
 
         return $this;
     }
+
+    /**
+     * @param array<string> $names
+     * @return $this
+     */
+    public function filterByNames(array $names = []): ServerInstancesConfig
+    {
+        $this->instances = $this->instances
+            ->filter(
+                function (ServerInstanceItem $item) use ($names) {
+                    return in_array($item->name, $names);
+                }
+            )
+            ->values();
+
+        return $this;
+    }
+
 }

@@ -25,7 +25,7 @@ class LsCommand extends AbstractCommand
         parent::execute($input, $output);
 
         $arg = '';
-        if(is_string($input->getArgument('arg'))){
+        if (is_string($input->getArgument('arg'))) {
             $arg = $input->getArgument('arg');
         }
 
