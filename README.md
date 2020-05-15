@@ -105,6 +105,12 @@ Checks whether a reboot is required
 
 ![system-info](https://user-images.githubusercontent.com/249065/81821061-ba509200-9531-11ea-8829-0fb9ca619105.png)
 
+### app:ufw
+- note: [sudo required]
+- Get UFW status
+
+![system-info](https://user-images.githubusercontent.com/249065/82075698-f116db80-96dc-11ea-8fa4-94960b5fc44e.png)
+
 ### app:upgrade
 - note: [sudo required]
 - Upgrade server packages

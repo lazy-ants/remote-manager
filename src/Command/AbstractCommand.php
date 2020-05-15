@@ -71,7 +71,7 @@ abstract class AbstractCommand extends Command
         if (is_string($input->getOption('tags'))) {
             $this->tags = explode(',', $input->getOption('tags'));
         }
-        
+
         $this->init();
 
         $output->writeln('<info>Total servers:</info> ' . $this->config->instances->count());
@@ -214,6 +214,11 @@ abstract class AbstractCommand extends Command
             ->sortBy('name')
             ->each(
                 function ($item) use ($table) {
+
+                    # used for creating screenshots
+                    # $faker = \Faker\Factory::create();
+                    # $faker->domainName
+
                     $table->addRow(
                         [
                             $item['name'],
