@@ -79,10 +79,7 @@ abstract class AbstractCommand extends Command
         return 0;
     }
 
-    /**
-     * @return void
-     */
-    protected function init()
+    protected function init(): void
     {
         $this->pool = Pool::create();
         $this->config = (new ServerInstancesConfig())
