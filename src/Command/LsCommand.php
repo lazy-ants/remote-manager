@@ -22,8 +22,13 @@ class LsCommand extends AbstractCommand
     {
         parent::execute($input, $output);
 
+        $arg = '';
+        if(is_string($input->getArgument('arg'))){
+            $arg = $input->getArgument('arg');
+        }
+
         $this
-            ->process('ls ' . $input->getArgument('arg'))
+            ->process('ls ' . $arg)
             ->outputList($output)
             ->outputErrors($output);
 

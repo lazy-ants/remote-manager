@@ -68,7 +68,10 @@ abstract class AbstractCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->tags = explode(',', $input->getOption('tags'));
+        if (is_string($input->getOption('tags'))) {
+            $this->tags = explode(',', $input->getOption('tags'));
+        }
+        
         $this->init();
 
         $output->writeln('<info>Total servers:</info> ' . $this->config->instances->count());
