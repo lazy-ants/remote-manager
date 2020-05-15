@@ -18,6 +18,11 @@ cd remote-manager
 make init
 ```
 
+or in case of updating in the future:
+```bash
+make update
+```
+
 ### 3. Add server connection to the config
 
 Open **config.json** with the editor of your choice and add server connections.
@@ -117,6 +122,38 @@ Validate server instances config
 ![validate](https://user-images.githubusercontent.com/249065/81821063-ba509200-9531-11ea-85eb-ef735ab42f1f.png)
 
 ## FAQ
+
+### Using tags
+
+You can add to each server instance in the config.json tags, e.g.
+```json
+{
+  "instances": [
+    {
+      "name": "example.com",
+      "connection-string": "user@example1.com",
+      "tags": "staging,client1"
+    },
+    {
+      "name": "example.org",
+      "connection-string": "otheruser@example2.org",
+      "tags": "live,client1"
+    },
+    {
+      "name": "example.net",
+      "connection-string": "someotheruser@example3.net",
+      "tags": "staging,client3"
+    }
+  ]
+}
+```
+
+and call every command with tags of servers you need:
+
+```bash
+app:uptime -t client1
+app:uptime -t client2,staging
+```
 
 ### Login into console
 

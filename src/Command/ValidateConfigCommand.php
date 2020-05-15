@@ -29,7 +29,7 @@ class ValidateConfigCommand extends AbstractCommand
         $table = new Table($output);
         $table->setHeaders(['Name', 'Login possible?', 'Sudo password exposed?', 'Sudo possible?']);
 
-        $this->config->each(
+        $this->config->instances->each(
             function (ServerInstanceItem $item, $i) use ($output, $table) {
                 $tableRow = [$item->name];
                 $output->writeln(

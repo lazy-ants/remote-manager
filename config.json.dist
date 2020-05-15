@@ -2,7 +2,7 @@
   "instances": [
     {
       "name": "example.com",
-      "connection-string": "user@example1.com",
+      "connection-string": "user@example1.com"
     },
     {
       "name": "example.org",
