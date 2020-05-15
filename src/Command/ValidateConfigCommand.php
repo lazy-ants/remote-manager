@@ -8,7 +8,6 @@ use App\Task\SimpleTask;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\InputStream;
 
 class ValidateConfigCommand extends AbstractCommand
 {
@@ -36,12 +35,10 @@ class ValidateConfigCommand extends AbstractCommand
                     sprintf(
                         'Checking %s of %s: %s',
                         $i + 1,
-                        $this->config->count(),
+                        $this->config->instances->count(),
                         $item->name
                     )
                 );
-
-                $input = new InputStream();
 
                 # check if login possible
                 $task = new SimpleTask($item->name, $item->connectionString, 'whoami');

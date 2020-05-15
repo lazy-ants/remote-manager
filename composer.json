@@ -39,5 +39,8 @@
         "post-update-cmd": [
             "@auto-scripts"
         ]
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12.25"
     }
 }

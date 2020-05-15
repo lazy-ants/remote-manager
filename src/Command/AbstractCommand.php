@@ -47,6 +47,19 @@ abstract class AbstractCommand extends Command
         );
     }
 
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this->tags = explode(',', $input->getOption('tags'));
+        $this->init();
+
+        $output->writeln('<info>Total servers:</info> ' . $this->config->instances->count());
+
+        $this->progressBar = new ProgressBar($output, $this->config->instances->count());
+        $this->progressBar->start();
+
+        return 0;
+    }
+
     protected function init()
     {
         $this->pool = Pool::create();
@@ -67,17 +80,6 @@ abstract class AbstractCommand extends Command
                 $process->wait();
             }
         }
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $this->tags = explode(',', $input->getOption('tags'));
-        $this->init();
-
-        $output->writeln('<info>Total servers:</info> ' . $this->config->instances->count());
-
-        $this->progressBar = new ProgressBar($output, $this->config->instances->count());
-        $this->progressBar->start();
     }
 
     /**
