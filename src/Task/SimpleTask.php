@@ -6,7 +6,7 @@ use Symfony\Component\Process\Process;
 
 class SimpleTask extends AbstractTask
 {
-    public function run()
+    public function run(): string
     {
         if ($this->needSudo) {
             if (empty($this->sudoPassword)) {

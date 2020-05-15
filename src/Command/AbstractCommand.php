@@ -21,11 +21,27 @@ abstract class AbstractCommand extends Command
 {
     protected ServerInstancesConfig $config;
     protected ProgressBar $progressBar;
+
+    /**
+     * @var Collection<array>
+     */
     protected Collection $results;
     protected Pool $pool;
+
+    /**
+     * @var Collection<array>
+     */
     protected Collection $errors;
+
+    /**
+     * @var Collection<string>
+     */
     protected Collection $timeouts;
     protected bool $needSudo = false;
+
+    /**
+     * @var array<string>
+     */
     protected array $tags = [];
 
     public function __construct(string $name = null)
@@ -37,6 +53,9 @@ abstract class AbstractCommand extends Command
         parent::__construct($name);
     }
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->addOption(
@@ -60,6 +79,9 @@ abstract class AbstractCommand extends Command
         return 0;
     }
 
+    /**
+     * @return void
+     */
     protected function init()
     {
         $this->pool = Pool::create();

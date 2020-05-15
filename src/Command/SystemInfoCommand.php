@@ -25,7 +25,7 @@ class SystemInfoCommand extends AbstractCommand
             ->process(
                 sprintf(
                     'echo "%s" > /tmp/system-info.base64',
-                    base64_encode(file_get_contents('src/Scripts/system-info.sh'))
+                    base64_encode((string)file_get_contents('src/Scripts/system-info.sh'))
                 ) .
                 '&& base64 -d /tmp/system-info.base64 > /tmp/system-info.sh' .
                 '&& rm /tmp/system-info.base64' .

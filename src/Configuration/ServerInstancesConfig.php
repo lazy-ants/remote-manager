@@ -6,13 +6,16 @@ use Tightenco\Collect\Support\Collection;
 
 class ServerInstancesConfig
 {
+    /**
+     * @var Collection<ServerInstanceItem>
+     */
     public Collection $instances;
 
     public function __construct()
     {
         $this->instances = new Collection();
 
-        foreach (json_decode(file_get_contents('config.json'), true)['instances'] as $item) {
+        foreach (json_decode((string)file_get_contents('config.json'), true)['instances'] as $item) {
             $serverInstanceItem = new ServerInstanceItem();
 
             $serverInstanceItem->name = $item['name'];
@@ -26,6 +29,10 @@ class ServerInstancesConfig
         }
     }
 
+    /**
+     * @param array<string> $tags
+     * @return $this
+     */
     public function filterByTags(array $tags = []): ServerInstancesConfig
     {
         $this->instances = $this->instances

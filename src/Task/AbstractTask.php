@@ -26,10 +26,10 @@ abstract class AbstractTask
         $this->sudoPassword = $sudoPassword;
     }
 
-    public function __invoke()
+    public function __invoke(): string
     {
         return $this->run();
     }
 
-    abstract public function run();
+    abstract public function run(): string;
 }
