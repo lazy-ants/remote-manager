@@ -25,6 +25,10 @@ class ValidateConfigCommand extends AbstractCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if (is_string($input->getOption('tags'))) {
+            $this->tags = explode(',', $input->getOption('tags'));
+        }
+
         $this->init();
 
         $table = new Table($output);

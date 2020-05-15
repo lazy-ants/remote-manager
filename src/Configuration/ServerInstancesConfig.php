@@ -2,6 +2,7 @@
 
 namespace App\Configuration;
 
+use LogicException;
 use Tightenco\Collect\Support\Collection;
 
 class ServerInstancesConfig
@@ -27,6 +28,14 @@ class ServerInstancesConfig
 
             $this->instances->push($serverInstanceItem);
         }
+
+        $duplicates = $this->instances->duplicates('name');
+
+        if ($duplicates->count() > 0) {
+            throw new LogicException(
+                'Duplicate server names in the config.json found: ' . $duplicates->unique()->implode(', ')
+            );
+        }
     }
 
     /**
@@ -48,4 +57,22 @@ class ServerInstancesConfig
 
         return $this;
     }
+
+    /**
+     * @param array<string> $names
+     * @return $this
+     */
+    public function filterByNames(array $names = []): ServerInstancesConfig
+    {
+        $this->instances = $this->instances
+            ->filter(
+                function (ServerInstanceItem $item) use ($names) {
+                    return in_array($item->name, $names);
+                }
+            )
+            ->values();
+
+        return $this;
+    }
+
 }

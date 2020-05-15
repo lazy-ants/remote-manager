@@ -96,6 +96,7 @@ Get server OS
 
 ### app:check-reboot                  
 Checks whether a reboot is required
+Use option "--reboot" or "-r" to immediately reboot if required
 
 ![reboot](https://user-images.githubusercontent.com/249065/81821065-bae92880-9531-11ea-9b70-59d6d8d941d1.png)
 
