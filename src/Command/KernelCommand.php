@@ -12,6 +12,8 @@ class KernelCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Get server kernels')
             ->setHelp('Get server kernels');

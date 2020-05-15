@@ -24,10 +24,10 @@ class UptimeCommand extends AbstractCommand
     {
         parent::execute($input, $output);
 
-        $this->process('uptime -s');
-
         $table = new Table($output);
         $table->setHeaders(['Name', 'Uptime']);
+
+        $this->process('uptime -s');
 
         $this->results->transform(
             function ($item) {

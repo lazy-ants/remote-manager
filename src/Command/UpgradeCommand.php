@@ -12,6 +12,8 @@ class UpgradeCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Upgrade server packages [need sudo]')
             ->setHelp('Upgrade server packages');

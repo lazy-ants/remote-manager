@@ -12,6 +12,8 @@ class DockerComposeVersionCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Get docket compose version')
             ->setHelp('Get docket compose version');

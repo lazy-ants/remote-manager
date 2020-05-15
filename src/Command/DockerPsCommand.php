@@ -11,6 +11,8 @@ class DockerPsCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Show docker process status')
             ->setHelp('Show docker process status');

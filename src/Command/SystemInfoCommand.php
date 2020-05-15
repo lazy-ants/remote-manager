@@ -12,6 +12,8 @@ class SystemInfoCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Get system information [need sudo]')
             ->setHelp('Get system information');

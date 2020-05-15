@@ -12,6 +12,8 @@ class OSCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Get server OS')
             ->setHelp('Get server OS');

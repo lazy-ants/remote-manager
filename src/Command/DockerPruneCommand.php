@@ -11,6 +11,8 @@ class DockerPruneCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Prune old docker data')
             ->setHelp('Prune old docker data');

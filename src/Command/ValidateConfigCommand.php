@@ -16,6 +16,8 @@ class ValidateConfigCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Validate server instances config')
             ->setHelp('Validate server instances config');

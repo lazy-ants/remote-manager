@@ -12,6 +12,8 @@ class LsCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Run ls command on all servers')
             ->setHelp('Run ls command on all servers')

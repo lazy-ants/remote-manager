@@ -12,6 +12,8 @@ class CheckRebootCommand extends AbstractCommand
 
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setDescription('Checks whether a reboot is required')
             ->setHelp('Checks whether a reboot is required');
