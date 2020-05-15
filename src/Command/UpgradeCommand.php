@@ -13,7 +13,7 @@ class UpgradeCommand extends AbstractCommand
     protected function configure()
     {
         $this
-            ->setDescription('Upgrade server packages')
+            ->setDescription('Upgrade server packages [need sudo]')
             ->setHelp('Upgrade server packages');
     }
 
