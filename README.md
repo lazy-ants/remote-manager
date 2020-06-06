@@ -208,7 +208,7 @@ Or if you prefer docker-compose:
 
 ```
 alias reman-cli='docker-compose run remote-manager bash'
-alias reman-console='docker-compose run remote-manager ./ru'
+alias reman-console='docker-compose run remote-manager bin/console'
 ```
 
 ## Contributing
