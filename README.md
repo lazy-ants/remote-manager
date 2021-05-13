@@ -31,11 +31,11 @@ It means "user@domain:port", however the port is optional.
 ### 4. Running configuration
 With docker:
 ```
-docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager bin/console app:validate-config
+docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager ./run app:validate-config
 ```
 With docker-compose:
 ```
-docker-compose run remote-manager run app:validate-config
+docker-compose run remote-manager ./run app:validate-config
 ```
 #### Result
 
