@@ -12,7 +12,7 @@ init:
 	cp config.json.dist config.json
 
 update:
-	docker pull php:7.4-cli-alpine
+	docker pull php:8.0-cli-alpine
 	docker build -t remote-manager .
 	docker run -it --rm -v "${PWD}":/usr/src/remote-manager remote-manager composer install
 	chmod +x run
