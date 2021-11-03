@@ -47,12 +47,12 @@ To test this setup run
 
 With docker
 ```
-docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager run app:uptime
+docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager ./run app:uptime
 ```
 
 with docker composer:
 ```
-docker-compose run remote-manager run app:uptime
+docker-compose run remote-manager ./run app:uptime
 ```
 
 ## Available commands
