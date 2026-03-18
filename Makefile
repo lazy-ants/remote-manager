@@ -1,18 +1,32 @@
-hello:
-	@ echo "The following make targets are available"
-	@ echo "  help - print this message"
-	@ echo "  init - build docker image and install dependencies"
-	@ echo "  update - update docker image and dependencies"
+VERSION ?= dev
+BINARY := remote-manager
+LDFLAGS := -ldflags="-s -w -X main.version=$(VERSION)"
 
-init:
-	docker build -t remote-manager .
-	docker run -it --rm -v "${PWD}":/usr/src/remote-manager remote-manager composer install
-	chmod +x run
-	cp .env .env.local
-	cp config.json.dist config.json
+.PHONY: help build test lint docker clean release
 
-update:
-	docker pull php:8.0-cli-alpine
-	docker build -t remote-manager .
-	docker run -it --rm -v "${PWD}":/usr/src/remote-manager remote-manager composer install
-	chmod +x run
+help:
+	@echo "Available targets:"
+	@echo "  build   - Build the binary"
+	@echo "  test    - Run all tests"
+	@echo "  lint    - Run golangci-lint"
+	@echo "  docker  - Build Docker image"
+	@echo "  clean   - Remove build artifacts"
+	@echo "  release - Build with goreleaser"
+
+build:
+	CGO_ENABLED=0 go build $(LDFLAGS) -o $(BINARY) .
+
+test:
+	go test ./...
+
+lint:
+	golangci-lint run
+
+docker:
+	docker build -t $(BINARY) .
+
+clean:
+	rm -f $(BINARY)
+
+release:
+	goreleaser release --snapshot --clean

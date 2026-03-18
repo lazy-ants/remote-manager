@@ -33,9 +33,9 @@ With docker:
 ```
 docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager ./run app:validate-config
 ```
-With docker-compose:
+With docker compose:
 ```
-docker-compose run remote-manager ./run app:validate-config
+docker compose run remote-manager ./run app:validate-config
 ```
 #### Result
 
@@ -128,6 +128,9 @@ Validate server instances config
 
 ![validate](https://user-images.githubusercontent.com/249065/81821063-ba509200-9531-11ea-85eb-ef735ab42f1f.png)
 
+### app:log4j
+Validate if log4j is installed on
+
 ## FAQ
 
 ### Using tags
@@ -173,7 +176,7 @@ reman-cli bash
 
 Prepare servers you want to manage:
 
-First of all, you need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of running commands with sudo).
+First, you need a possibility to provide the sudo password in a secure way as an environment variable to your server (for sure in case you need the possibility of running commands with sudo).
 Therefore, On each server you want to manage edit 
 ```
 sudo nano /etc/ssh/sshd_config
@@ -198,17 +201,17 @@ alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh/id_rsa:/root/.ssh/id_rsa -v ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub -v ~/.ssh/id_rsa:/root/.ssh/known_hosts remote-manager ./run'
 ```
 
-Otherwise you can simple map the whole .ssh directory:
+Otherwise, you can simply map the whole .ssh directory:
 ```
 alias reman-cli='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager'
 alias reman-console='docker run -it --rm -v "$PWD":/usr/src/remote-manager -v ~/.ssh:/root/.ssh remote-manager ./run'
 ```
 
-Or if you prefer docker-compose:
+Or if you prefer docker compose:
 
 ```
-alias reman-cli='docker-compose run remote-manager bash'
-alias reman-console='docker-compose run remote-manager ./run'
+alias reman-cli='docker compose run remote-manager bash'
+alias reman-console='docker compose run remote-manager ./run'
 ```
 
 ## Contributing

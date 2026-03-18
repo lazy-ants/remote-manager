@@ -1,3 +1,7 @@
 /config.json
 /.env.local
 /vendor
+/remote-manager
+/dist
+/.idea
+/.claude/settings.local.json

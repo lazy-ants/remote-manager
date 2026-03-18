@@ -1,19 +1,17 @@
-FROM php:8.0-cli-alpine
+FROM golang:1.22-alpine AS builder
 
-RUN apk add --no-cache \
-      openssh-client \
-        ca-certificates \
-        bash \
-        git
+WORKDIR /build
 
-RUN docker-php-ext-install pcntl
+COPY go.mod go.sum ./
+RUN go mod download
 
-RUN curl -s https://getcomposer.org/composer-stable.phar > /usr/local/bin/composer \
-    && chmod a+x /usr/local/bin/composer
+COPY . .
+RUN CGO_ENABLED=0 go build -ldflags="-s -w -X main.version=$(cat VERSION 2>/dev/null || echo dev)" -o remote-manager .
 
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+FROM alpine:3.19
 
-WORKDIR /usr/src/remote-manager
+RUN apk add --no-cache ca-certificates
 
-ENTRYPOINT ["docker-entrypoint.sh"]
+COPY --from=builder /build/remote-manager /usr/local/bin/remote-manager
+
+ENTRYPOINT ["remote-manager"]

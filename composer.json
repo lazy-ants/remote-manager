@@ -2,16 +2,16 @@
     "type": "project",
     "license": "MIT License",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "nesbot/carbon": "^2.53",
-        "spatie/async": "^1.5",
-        "symfony/console": "^5.3",
-        "symfony/dotenv": "^5.3",
-        "symfony/process": "^5.3",
-        "tightenco/collect": "^8.34"
+        "nesbot/carbon": "^2.7",
+        "spatie/async": "^1.6",
+        "symfony/console": "^5.4",
+        "symfony/dotenv": "^5.4",
+        "symfony/process": "^5.4",
+        "tightenco/collect": "^8.83"
     },
     "config": {
         "preferred-install": {
@@ -41,7 +41,6 @@
         ]
     },
     "require-dev": {
-        "phpstan/phpstan": "^1.0",
-        "fakerphp/faker": "^1.16"
+        "phpstan/phpstan": "^1.10"
     }
 }
